@@ -1,4 +1,4 @@
-package br.com.mentoria.servicos.entidades;
+package br.com.mentoria.entidades;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

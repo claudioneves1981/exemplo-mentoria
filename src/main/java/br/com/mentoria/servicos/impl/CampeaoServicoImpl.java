@@ -1,10 +1,10 @@
-package br.com.mentoria.servicos.contratos.impl;
+package br.com.mentoria.servicos.impl;
 
 import br.com.mentoria.repositorio.CampeaoRepositorio;
-import br.com.mentoria.servicos.contratos.CampeaoServico;
-import br.com.mentoria.servicos.entidades.Campeao;
-import br.com.mentoria.servicos.excecoes.CampeaoException;
-import br.com.mentoria.servicos.util.EmailUtil;
+import br.com.mentoria.servicos.CampeaoServico;
+import br.com.mentoria.entidades.Campeao;
+import br.com.mentoria.excecoes.CampeaoException;
+import br.com.mentoria.util.EmailUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
