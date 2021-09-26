@@ -1,11 +1,9 @@
-package br.com.mentoria.apis.contratos.impl;
+package br.com.mentoria.apis.impl;
 
-import br.com.mentoria.adaptadores.CampeaoServiceAdapter;
-import br.com.mentoria.apis.contratos.ApiCampeao;
-import br.com.mentoria.apis.entidades.NovoCampeaoDTO;
-import br.com.mentoria.servicos.contratos.CampeaoServico;
-import br.com.mentoria.servicos.entidades.Campeao;
-import br.com.mentoria.servicos.excecoes.CampeaoException;
+import br.com.mentoria.apis.ApiCampeao;
+import br.com.mentoria.entidades.Campeao;
+import br.com.mentoria.excecoes.CampeaoException;
+import br.com.mentoria.servicos.CampeaoServico;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,9 +23,8 @@ public class ApiCampeaoImpl implements ApiCampeao {
 
     @PostMapping(value="/salvar")
     @Override
-    public ResponseEntity<NovoCampeaoDTO> salvarCampeao(@RequestBody NovoCampeaoDTO novoCampeao) throws CampeaoException {
-        CampeaoServiceAdapter adapter = new CampeaoServiceAdapter(novoCampeao);
-        campeaoServico.salvarCampeao(adapter.getCampeao());
+    public ResponseEntity<Campeao> salvarCampeao(@RequestBody Campeao novoCampeao) throws CampeaoException {
+        campeaoServico.salvarCampeao(novoCampeao);
         return ResponseEntity.ok(novoCampeao);
     }
 

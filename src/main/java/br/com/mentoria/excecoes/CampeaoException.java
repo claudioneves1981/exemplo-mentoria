@@ -1,4 +1,4 @@
-package br.com.mentoria.servicos.excecoes;
+package br.com.mentoria.excecoes;
 
 public class CampeaoException extends Exception{
     private String msg;

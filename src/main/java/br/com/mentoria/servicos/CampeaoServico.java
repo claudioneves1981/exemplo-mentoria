@@ -1,7 +1,7 @@
-package br.com.mentoria.servicos.contratos;
+package br.com.mentoria.servicos;
 
-import br.com.mentoria.servicos.entidades.Campeao;
-import br.com.mentoria.servicos.excecoes.CampeaoException;
+import br.com.mentoria.entidades.Campeao;
+import br.com.mentoria.excecoes.CampeaoException;
 
 import java.util.List;
 

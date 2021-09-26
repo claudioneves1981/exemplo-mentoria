@@ -1,8 +1,7 @@
-package br.com.mentoria.apis.contratos;
+package br.com.mentoria.apis;
 
-import br.com.mentoria.apis.entidades.NovoCampeaoDTO;
-import br.com.mentoria.servicos.entidades.Campeao;
-import br.com.mentoria.servicos.excecoes.CampeaoException;
+import br.com.mentoria.entidades.Campeao;
+import br.com.mentoria.excecoes.CampeaoException;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -19,7 +18,7 @@ public interface ApiCampeao {
             @ApiResponse(code = 500, message = "Retornará uma mensagem amigável para o usuário"),
     })
 
-    ResponseEntity<NovoCampeaoDTO> salvarCampeao(NovoCampeaoDTO novoCampeao) throws CampeaoException;
+    ResponseEntity<Campeao> salvarCampeao(Campeao novoCampeao) throws CampeaoException;
     ResponseEntity<List<Campeao>> listarCampeoes();
 
 }
