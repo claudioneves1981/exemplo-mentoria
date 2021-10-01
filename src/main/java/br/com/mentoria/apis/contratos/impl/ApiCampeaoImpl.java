@@ -37,4 +37,10 @@ public class ApiCampeaoImpl implements ApiCampeao {
     public ResponseEntity<List<CampeaoAPI>> listarCampeoes() throws CampeaoException {
         return ResponseEntity.ok(new CampeaoAPIAdapter(campeaoServico.listarTodos()).getCampeoesAPI());
     }
+
+    @GetMapping(value = "{id}")
+    @Override
+    public ResponseEntity<CampeaoAPI> campeaoPorId(@PathVariable Long id) throws CampeaoException{
+        return ResponseEntity.ok(new CampeaoAPIAdapter(campeaoServico.buscaPorId(id)).getCampeaoAPI());
+    }
 }

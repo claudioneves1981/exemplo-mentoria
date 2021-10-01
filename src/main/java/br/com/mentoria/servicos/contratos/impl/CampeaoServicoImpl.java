@@ -40,6 +40,11 @@ public class CampeaoServicoImpl implements CampeaoServico {
         return new CampeaoServiceAdapter(campeaoRepositorio.findAll()).getCampeoes();
     }
 
+    @Override
+    public Campeao buscaPorId(Long id) {
+        return new CampeaoServiceAdapter(campeaoRepositorio.findById(id).get()).getCampeao();
+    }
+
     private Campeao criarJedi(Campeao campeao){
         System.out.print("Criou um JEDI");
         return Campeao.builder()

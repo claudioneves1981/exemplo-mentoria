@@ -18,7 +18,6 @@ public interface ApiCampeao {
             @ApiResponse(code = 403, message = "Você não tem permissão para acessar este recurso"),
             @ApiResponse(code = 500, message = "Retornará uma mensagem amigável para o usuário"),
     })
-
     ResponseEntity<CampeaoAPI> salvarCampeao(CampeaoAPI novoCampeao) throws CampeaoException;
 
     @ApiOperation(value="Lista todos os campeoes")
@@ -27,7 +26,14 @@ public interface ApiCampeao {
             @ApiResponse(code = 403, message = "Você não tem permissão para acessar este recurso"),
             @ApiResponse(code = 500, message = "Retornará uma mensagem amigável para o usuário"),
     })
-
     ResponseEntity<List<CampeaoAPI>> listarCampeoes() throws CampeaoException;
+
+    @ApiOperation(value="Mostra um Campeao pelo id")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Retorna id de campeao"),
+            @ApiResponse(code = 403, message = "Você não tem permissão para acessar este recurso"),
+            @ApiResponse(code = 500, message = "Retornará uma mensagem amigável para o usuário"),
+    })
+    ResponseEntity<CampeaoAPI> campeaoPorId (Long id) throws CampeaoException;
 
 }
