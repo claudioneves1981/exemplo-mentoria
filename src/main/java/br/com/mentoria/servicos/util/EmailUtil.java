@@ -1,4 +1,4 @@
-package br.com.mentoria.util;
+package br.com.mentoria.servicos.util;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

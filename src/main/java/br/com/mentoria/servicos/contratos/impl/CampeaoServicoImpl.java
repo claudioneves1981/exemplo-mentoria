@@ -1,10 +1,12 @@
-package br.com.mentoria.servicos.impl;
+package br.com.mentoria.servicos.contratos.impl;
 
-import br.com.mentoria.repositorio.CampeaoRepositorio;
-import br.com.mentoria.servicos.CampeaoServico;
-import br.com.mentoria.entidades.Campeao;
-import br.com.mentoria.excecoes.CampeaoException;
-import br.com.mentoria.util.EmailUtil;
+import br.com.mentoria.adaptadores.CampeaoRepositorioAdapter;
+import br.com.mentoria.adaptadores.CampeaoServiceAdapter;
+import br.com.mentoria.bd.contratos.RepositorioCampeaoEntity;
+import br.com.mentoria.servicos.contratos.CampeaoServico;
+import br.com.mentoria.servicos.entidades.Campeao;
+import br.com.mentoria.servicos.excecoes.CampeaoException;
+import br.com.mentoria.servicos.util.EmailUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -12,15 +14,15 @@ import java.util.List;
 @Service
 public class CampeaoServicoImpl implements CampeaoServico {
 
-    private CampeaoRepositorio campeaoRepositorio;
+    private RepositorioCampeaoEntity campeaoRepositorio;
 
     @Autowired
-    public CampeaoServicoImpl(CampeaoRepositorio campeaoRepositorio){
+    public CampeaoServicoImpl(RepositorioCampeaoEntity campeaoRepositorio){
         this.campeaoRepositorio = campeaoRepositorio;
     }
 
     @Override
-    public Campeao salvarCampeao(Campeao campeao) throws CampeaoException {
+    public boolean salvarCampeao(Campeao campeao) throws CampeaoException {
             validaCampeao(campeao);
             if (campeao.getTipo().equals("jedi")) {
                 campeao = criarJedi(campeao);
@@ -28,13 +30,14 @@ public class CampeaoServicoImpl implements CampeaoServico {
                 campeao = criarSith(campeao);
             }
 
-       //return campeao.getHp() != null;
-        return campeaoRepositorio.save(campeao);
+            campeaoRepositorio.save(new CampeaoRepositorioAdapter(campeao).getCampeaoEntity());
+
+       return campeao.getHp() != null;
     }
 
     @Override
-    public List<Campeao> findAll() {
-        return campeaoRepositorio.findAll();
+    public List<Campeao> listarTodos() {
+        return new CampeaoServiceAdapter(campeaoRepositorio.findAll()).getCampeoes();
     }
 
     private Campeao criarJedi(Campeao campeao){
