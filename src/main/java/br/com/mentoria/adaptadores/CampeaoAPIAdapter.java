@@ -31,6 +31,7 @@ public class CampeaoAPIAdapter {
 
     private CampeaoAPI convertCampeaoParaCampeaoAPI(Campeao campeao){
         return CampeaoAPI.builder()
+                .id(campeao.getId())
                 .email(campeao.getEmail())
                 .corSabre(campeao.getCorSabre())
                 .nome(campeao.getNome())

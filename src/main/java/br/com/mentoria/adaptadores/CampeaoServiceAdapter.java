@@ -34,6 +34,7 @@ public class CampeaoServiceAdapter {
 
     private Campeao convertCampeaoDTOemCampeao(CampeaoAPI campeaoAPI){
         return campeao.builder()
+                .id(campeaoAPI.getId())
                 .email(campeaoAPI.getEmail())
                 .nome(campeaoAPI.getNome())
                 .corSabre(campeaoAPI.getCorSabre())
@@ -43,6 +44,7 @@ public class CampeaoServiceAdapter {
 
     private Campeao convertCampeaoEntityEmCampeao(CampeaoEntity campeaoEntity){
        return Campeao.builder()
+               .id(campeaoEntity.getId())
                .hp(campeaoEntity.getHp())
                .afinidadeForca(campeaoEntity.getAfinidadeForca())
                .previsao(campeaoEntity.getPrevisao())

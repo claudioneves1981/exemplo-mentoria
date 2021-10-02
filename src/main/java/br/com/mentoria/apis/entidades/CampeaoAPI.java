@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class CampeaoAPI {
 
+    private Long id;
     private String nome;
     private String email;
     private String corSabre;

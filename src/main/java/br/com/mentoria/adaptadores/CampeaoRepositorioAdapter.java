@@ -13,6 +13,7 @@ public class CampeaoRepositorioAdapter {
 
     private void converteCampeaoEmCampeaoEntity(Campeao campeao){
         campeaoEntity = campeaoEntity.builder()
+                .id(campeao.getId())
                 .corSabre(campeao.getCorSabre())
                 .email(campeao.getEmail())
                 .nome(campeao.getNome())
