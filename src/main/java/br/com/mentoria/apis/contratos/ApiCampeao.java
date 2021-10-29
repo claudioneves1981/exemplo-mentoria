@@ -16,6 +16,7 @@ public interface ApiCampeao {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Retorna uma mensagem se salvou o valor"),
             @ApiResponse(code = 403, message = "Você não tem permissão para acessar este recurso"),
+            @ApiResponse(code = 406, message = "Quando uma regra for quebra"),
             @ApiResponse(code = 500, message = "Retornará uma mensagem amigável para o usuário"),
     })
     ResponseEntity<CampeaoAPI> salvarCampeao(CampeaoAPI novoCampeao) throws CampeaoException;
@@ -36,4 +37,20 @@ public interface ApiCampeao {
     })
     ResponseEntity<CampeaoAPI> campeaoPorId (Long id) throws CampeaoException;
 
+    @ApiOperation(value="Atualiza um valor")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Retorna uma mensagem se salvou o valor"),
+            @ApiResponse(code = 403, message = "Você não tem permissão para acessar este recurso"),
+            @ApiResponse(code = 500, message = "Retornará uma mensagem amigável para o usuário"),
+    })
+    ResponseEntity<?> atualizarCampeao(CampeaoAPI novoCampeao) throws CampeaoException;
+
+
+    @ApiOperation(value="Retorna o campeao com base no email informado")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Retorna o campeao"),
+            @ApiResponse(code = 403, message = "Você não tem permissão para acessar este recurso"),
+            @ApiResponse(code = 500, message = "Retornará uma mensagem amigável para o usuário"),
+    })
+    ResponseEntity<CampeaoAPI> retornaCampeao(String email) throws CampeaoException;
 }

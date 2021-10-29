@@ -10,4 +10,5 @@ public interface CampeaoServico {
     boolean salvarCampeao(Campeao campeao) throws CampeaoException;
     List<Campeao> listarTodos();
     Campeao buscaPorId(Long id);
+    Campeao encontraCampeao(String email);
 }

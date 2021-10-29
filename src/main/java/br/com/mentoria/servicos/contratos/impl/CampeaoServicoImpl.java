@@ -1,36 +1,50 @@
 package br.com.mentoria.servicos.contratos.impl;
 
-import br.com.mentoria.adaptadores.CampeaoRepositorioAdapter;
-import br.com.mentoria.adaptadores.CampeaoServiceAdapter;
+import br.com.mentoria.adaptadores.campeao.CampeaoEntidadeAdapter;
+import br.com.mentoria.adaptadores.campeao.CampeaoServiceAdapter;
 import br.com.mentoria.bd.contratos.RepositorioCampeaoEntity;
+import br.com.mentoria.bd.contratos.RepositorioTipoCampeaoEntity;
 import br.com.mentoria.servicos.contratos.CampeaoServico;
 import br.com.mentoria.servicos.entidades.Campeao;
+import br.com.mentoria.servicos.entidades.enuns.TipoCampeaoEnum;
 import br.com.mentoria.servicos.excecoes.CampeaoException;
+import br.com.mentoria.servicos.util.CampeaoUtil;
 import br.com.mentoria.servicos.util.EmailUtil;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import java.util.List;
 
-@Service
 public class CampeaoServicoImpl implements CampeaoServico {
 
     private RepositorioCampeaoEntity campeaoRepositorio;
+    private RepositorioTipoCampeaoEntity repositorioTipoCampeaoEntity;
 
-    @Autowired
-    public CampeaoServicoImpl(RepositorioCampeaoEntity campeaoRepositorio){
+    private static CampeaoServico instance;
+
+    private CampeaoServicoImpl(RepositorioCampeaoEntity campeaoRepositorio,
+                               RepositorioTipoCampeaoEntity repositorioTipoCampeaoEntity){
         this.campeaoRepositorio = campeaoRepositorio;
+        this.repositorioTipoCampeaoEntity = repositorioTipoCampeaoEntity;
+    }
+
+    public static CampeaoServico getInstance(RepositorioCampeaoEntity campeaoRepositorio,
+                                             RepositorioTipoCampeaoEntity repositorioTipoCampeaoEntity){
+        if(instance == null){
+            instance = new CampeaoServicoImpl(campeaoRepositorio, repositorioTipoCampeaoEntity);
+        }
+        return instance;
     }
 
     @Override
     public boolean salvarCampeao(Campeao campeao) throws CampeaoException {
             validaCampeao(campeao);
-            if (campeao.getTipo().equals("jedi")) {
-                campeao = criarJedi(campeao);
-            } else {
-                campeao = criarSith(campeao);
+            if (campeao.getTipo().getNomeTecnico().equals(TipoCampeaoEnum.JEDI.toString())) {
+                campeao = CampeaoUtil.criarJedi(campeao);
+            } else if(campeao.getTipo().getNomeTecnico().equals(TipoCampeaoEnum.SITH.toString())){
+                campeao = CampeaoUtil.criarSith(campeao);
+            }else{
+                throw new CampeaoException("Um tipo de campeao nao existente foi selecionado");
             }
 
-            campeaoRepositorio.save(new CampeaoRepositorioAdapter(campeao).getCampeaoEntity());
+            campeaoRepositorio.save(new CampeaoEntidadeAdapter(campeao, repositorioTipoCampeaoEntity).getCampeaoEntidade());
 
        return campeao.getHp() != null;
     }
@@ -45,38 +59,9 @@ public class CampeaoServicoImpl implements CampeaoServico {
         return new CampeaoServiceAdapter(campeaoRepositorio.findById(id).get()).getCampeao();
     }
 
-    private Campeao criarJedi(Campeao campeao){
-        System.out.print("Criou um JEDI");
-        return Campeao.builder()
-                .id(campeao.getId())
-                .nome(campeao.getNome())
-                .email(campeao.getEmail())
-                .corSabre(campeao.getCorSabre())
-                .tipo(campeao.getTipo())
-                .afinidadeForca(5L)
-                .forcaFisica(5L)
-                .hp(150L)
-                .habilidadeComSabre(5L)
-                .mental(10L)
-                .previsao(5L)
-                .build();
-    }
-
-    private Campeao criarSith(Campeao campeao){
-        System.out.print("Criou um SITH");
-        return Campeao.builder()
-                .id(campeao.getId())
-                .nome(campeao.getNome())
-                .email(campeao.getEmail())
-                .corSabre(campeao.getCorSabre())
-                .tipo(campeao.getTipo())
-                .afinidadeForca(5L)
-                .forcaFisica(10L)
-                .hp(150L)
-                .habilidadeComSabre(5L)
-                .mental(5L)
-                .previsao(5L)
-                .build();
+    @Override
+    public Campeao encontraCampeao(String email) {
+        return new CampeaoServiceAdapter(campeaoRepositorio.findByEmail(email)).getCampeao();
     }
 
     private void validaCampeao(Campeao campeao) throws CampeaoException {

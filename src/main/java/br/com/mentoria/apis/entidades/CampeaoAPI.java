@@ -15,5 +15,12 @@ public class CampeaoAPI {
     private String nome;
     private String email;
     private String corSabre;
-    private boolean jedi;
+    private Long hp;
+    private Long afinidadeForca;
+    private Long habilidadeComSabre;
+    private Long previsao;
+    private Long mental;
+    private Long forcaFisica;
+    private TipoCampeaoAPI tipoCampeao;
+    private String erro;
 }
